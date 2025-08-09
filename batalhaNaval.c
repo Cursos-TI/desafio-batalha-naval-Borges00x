@@ -44,18 +44,16 @@ int main() {
 
     // Adicionando Navios no tabuleiro usando a estrutura for
 
-    for (int l = 0, v = 9; l < 10; l++, v--) 
-    {
         // for para o Navio na vertical
         for (int n = 0; n < 3; n++) 
         {      
-            tabuleiro[n][3] = 3;
+            tabuleiro[n][5] = 3;
         }        
 
         // for para o Navio na horizontal
         for (int n2 = 0; n2 < 3; n2++)
         {
-            tabuleiro[6][n2+7] = 3;
+            tabuleiro[4][n2+7] = 3;
         }
 
         // for para o Navio na diagonal direita superior
@@ -71,8 +69,6 @@ int main() {
         {
             tabuleiro[d][9-d] = 3;
         }
-        
-    }
 
     // criando as habilidades
 
@@ -83,17 +79,17 @@ int main() {
         {
             if (l == 2) 
             {
-                cone[l][c] = 1;
+                cone[l][c] = 5;
             }
                 else if (l == 1) 
                 {
                     if(c == 0 || c == 4)continue;
-                    cone[l][c] = 1;
+                    cone[l][c] = 5;
                 }
                 else if (l == 0)
                 {
                     if(c < 2 || c > 2)continue;
-                    cone[l][c] = 1;
+                    cone[l][c] = 5;
 
                 } 
         }
@@ -121,7 +117,7 @@ int main() {
             }
                 else 
                 {
-                    if(c < 1 || c > 7) continue;
+                    if(c < 1 || c > 3) continue;
                     octaedro[l][c] = 7;                    
                 }
         }
@@ -133,36 +129,42 @@ int main() {
 
             for(int n = 0; n < coluna; n++) 
             {
-                int limiteL = l;
-                int limiteC = n;
+                int limiteL_cone = l;
+                int limiteC_cone = n;
 
-                if (cone[l][n] == 1) 
+                if (cone[l][n] == 5) 
                 {
-                    if (limiteL < linhatabu && limiteL >= 0 && limiteC >= 0 && limiteC < colunatabu) {
-                        if (tabuleiro[l][n] == 0) {
+                    if (limiteL_cone < linhatabu && limiteL_cone >= 0 && limiteC_cone >= 0 && limiteC_cone < colunatabu) {
+                        if (tabuleiro[limiteL_cone][limiteC_cone] == 0) {
 
-                            tabuleiro[l][n] = 1;
+                            tabuleiro[limiteL_cone][limiteC_cone] = 5;
                         }
                     }
                 }
+
+                int limiteL_cruz = l + 4;
+                int limiteC_cruz = n;
 
                 if (cruz[l][n] == 6) 
                 {
-                    if (limiteL < linhatabu && limiteL >= 0 && limiteC >= 0 && limiteC < colunatabu) {
-                        if (tabuleiro[l+7][n] == 0) {
+                    if (limiteL_cruz < linhatabu && limiteL_cruz >= 0 && limiteC_cruz >= 0 && limiteC_cruz < colunatabu) {
+                        if (tabuleiro[limiteL_cruz][limiteC_cruz] == 0) {
 
-                            tabuleiro[l+7][n] = 6;
+                            tabuleiro[limiteL_cruz][limiteC_cruz] = 6;
                         }
                     }
                 }
 
+                int limiteL_octaedro = l + 5;
+                int limiteC_octaedro = n + 5;
+
                 if (octaedro[l][n] == 7) 
                 {
-                    if (limiteL < linhatabu && limiteL >= 0 && limiteC >= 0 && limiteC < colunatabu) {
+                    if (limiteL_octaedro < linhatabu && limiteL_octaedro >= 0 && limiteC_octaedro >= 0 && limiteC_octaedro < colunatabu) {
 
-                        if (tabuleiro[l+5][n+5] == 0) {
+                        if (tabuleiro[limiteL_octaedro][limiteC_octaedro] == 0) {
 
-                        tabuleiro[l+5][n+5] = 7;
+                        tabuleiro[limiteL_octaedro][limiteC_octaedro] = 7;
                         }
                     }
                 }
@@ -174,6 +176,7 @@ int main() {
     printf("TABULEIRO DE BATALHA NAVAL: \n");
 
     // Exibindo as letras
+    printf("  ");
     for(int contar = 0; contar < 10; contar++) 
     {
         printf(" %c", letras[contar]);
