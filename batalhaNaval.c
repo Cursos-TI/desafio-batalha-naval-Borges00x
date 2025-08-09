@@ -1,14 +1,74 @@
 #include <stdio.h>
 
-// Desafio Batalha Naval - MateCheck
-// Este código inicial serve como base para o desenvolvimento do sistema de Batalha Naval.
-// Siga os comentários para implementar cada parte do desafio.
-
 int main() {
-    // Nível Novato - Posicionamento dos Navios
-    // Sugestão: Declare uma matriz bidimensional para representar o tabuleiro (Ex: int tabuleiro[5][5];).
-    // Sugestão: Posicione dois navios no tabuleiro, um verticalmente e outro horizontalmente.
-    // Sugestão: Utilize `printf` para exibir as coordenadas de cada parte dos navios.
+    // Navios do jogo
+
+    char letras[10] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
+
+    int navio[3] = {3, 3, 3};
+
+    int navio2[3] = {3, 3, 3};
+
+    // Tabuleiro do jogo
+    int tabuleiro[10][10] = {
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    };
+
+    // Adicionando Navios no tabuleiro usando a estrutura for
+            printf("vetor: %d \n", navio[2]);
+    for (int l = 0; l < 10; l++) 
+    {
+        // for para o Navio na vertical
+        for (int n = 0; n < 4; n++) 
+        {
+            if (n < 3)continue;
+            if (l > 2)break;
+                       
+            tabuleiro[l][n] = navio[2];
+
+
+        }
+            if (l < 6)continue;
+        // for para o Navio na horizontal
+        for (int n2 = 0; n2 < 10; n2++)
+        {
+            if (n2 < 7)continue;
+            if (l > 6)break;
+            tabuleiro[l][n2] = navio2[2];
+        }
+        
+    }
+
+// Exibindo o tabuleiro
+
+    printf("TABULEIRO DE BATALHA NAVAL: \n");
+
+    // Exibindo as letras
+    for(int contar = 0; contar < 10; contar++) 
+    {
+        printf(" %c", letras[contar]);
+    }
+    for(int l = 0; l < 10; l++) 
+    {
+
+        printf("\n");
+
+        printf("%d ", l+1);
+
+        for(int n = 0; n < 10; n++) 
+        {
+            printf("%d ", tabuleiro[l][n]);
+        }
+    }
 
     // Nível Aventureiro - Expansão do Tabuleiro e Posicionamento Diagonal
     // Sugestão: Expanda o tabuleiro para uma matriz 10x10.
