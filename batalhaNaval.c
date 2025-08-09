@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 int main() {
+
     // Navios do jogo
 
     #define linha 3
@@ -46,37 +47,29 @@ int main() {
     for (int l = 0, v = 9; l < 10; l++, v--) 
     {
         // for para o Navio na vertical
-        for (int n = 0; n < 4; n++) 
-        {
-            if (n < 3)continue;
-            if (l > 2)break;
-                       
-            tabuleiro[l][n] = navio[2];
+        for (int n = 0; n < 3; n++) 
+        {      
+            tabuleiro[n][3] = 3;
         }        
 
         // for para o Navio na horizontal
-        for (int n2 = 0; n2 < 10; n2++)
+        for (int n2 = 0; n2 < 3; n2++)
         {
-            if (l < 6)continue;            
-            if (n2 < 7)continue;
-            if (l > 6)break;
-            tabuleiro[l][n2] = navio2[2];
+            tabuleiro[6][n2+7] = 3;
         }
 
         // for para o Navio na diagonal direita superior
 
-        for (int d = 9; d > 6; d--) 
+        for (int d = 9; d >= 7; d--)
         {
-            if(d != v)continue;
-            tabuleiro[l][d] = navioD[2];
+             tabuleiro[9-d][d] = 3;
         }
 
         // for para o Navio na diagonal esquerda inferior
         
-        for (int d = 2; d > -1; d--) 
+        for (int d = 9; d > 6; d--) 
         {
-            if(d != v)continue;
-            tabuleiro[l][d] = navioD2[2];
+            tabuleiro[d][9-d] = 3;
         }
         
     }
@@ -110,11 +103,11 @@ int main() {
             if (l == 0 || l == 2) 
             {
                 if (c < 2 || c > 2)continue;
-                cruz[l][c] = 1;
+                cruz[l][c] = 6;
             }
                 else if (l == 1) 
                 {
-                    cruz[l][c] = 1;
+                    cruz[l][c] = 6;
                 }
         }
 
@@ -124,12 +117,12 @@ int main() {
             if (l == 0 || l == 2) 
             {
                 if(c < 2 || c > 2)continue;
-                octaedro[l][c] = 1;
+                octaedro[l][c] = 7;
             }
                 else 
                 {
-                    if(c < 1 || c > 3) continue;
-                    octaedro[l][c] = 1;                    
+                    if(c < 1 || c > 7) continue;
+                    octaedro[l][c] = 7;                    
                 }
         }
 
@@ -140,19 +133,38 @@ int main() {
 
             for(int n = 0; n < coluna; n++) 
             {
+                int limiteL = l;
+                int limiteC = n;
+
                 if (cone[l][n] == 1) 
                 {
-                    tabuleiro[l][n] = 1;
+                    if (limiteL < linhatabu && limiteL >= 0 && limiteC >= 0 && limiteC < colunatabu) {
+                        if (tabuleiro[l][n] == 0) {
+
+                            tabuleiro[l][n] = 1;
+                        }
+                    }
                 }
 
-                if (cruz[l][n] == 1) 
+                if (cruz[l][n] == 6) 
                 {
-                    tabuleiro[l+7][n] = 1;
+                    if (limiteL < linhatabu && limiteL >= 0 && limiteC >= 0 && limiteC < colunatabu) {
+                        if (tabuleiro[l+7][n] == 0) {
+
+                            tabuleiro[l+7][n] = 6;
+                        }
+                    }
                 }
 
-                if (octaedro[l][n] == 1) 
+                if (octaedro[l][n] == 7) 
                 {
-                    tabuleiro[l+5][n+5] = 1;
+                    if (limiteL < linhatabu && limiteL >= 0 && limiteC >= 0 && limiteC < colunatabu) {
+
+                        if (tabuleiro[l+5][n+5] == 0) {
+
+                        tabuleiro[l+5][n+5] = 7;
+                        }
+                    }
                 }
             }      
     }  
@@ -182,6 +194,6 @@ int main() {
         printf("\n");    
     }
 
-
     return 0;
+
 }
