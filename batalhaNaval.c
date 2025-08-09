@@ -3,6 +3,12 @@
 int main() {
     // Navios do jogo
 
+    #define linha 3
+    #define coluna 5
+
+    #define linhatabu 10
+    #define colunatabu 10
+
     char letras[10] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
 
     int navio[3] = {3, 3, 3}, 
@@ -10,19 +16,30 @@ int main() {
     navioD[3] = {3, 3, 3},
     navioD2[3] = {3, 3, 3};
 
-    // Tabuleiro do jogo
-    int tabuleiro[10][10] = {
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-    };
+    int cone[linha][coluna], 
+    cruz[linha][coluna], 
+    octaedro[linha][coluna]; 
+
+    // Tabuleiro do jogo preenchido com valor 0 através do for
+    int tabuleiro[linhatabu][colunatabu];
+
+    for (int l = 0; l < linhatabu; l++) 
+    {
+        for (int c = 0; c < colunatabu; c++) 
+        {
+            tabuleiro[l][c] = 0;
+        }
+    }
+
+    // Inicializando as matrizes de habilidade
+
+    for (int l = 0; l < linha; l++) {
+        for (int c = 0; c < coluna; c++) {
+            cone[l][c] = 0;
+            cruz[l][c] = 0;
+            octaedro[l][c] = 0;
+        }
+    }
 
     // Adicionando Navios no tabuleiro usando a estrutura for
 
@@ -64,6 +81,82 @@ int main() {
         
     }
 
+    // criando as habilidades
+
+    for (int l = 2; l >= 0; l--) 
+    {
+    // habilidade do cone        
+        for (int c = 4; c >= 0; c--) 
+        {
+            if (l == 2) 
+            {
+                cone[l][c] = 1;
+            }
+                else if (l == 1) 
+                {
+                    if(c == 0 || c == 4)continue;
+                    cone[l][c] = 1;
+                }
+                else if (l == 0)
+                {
+                    if(c < 2 || c > 2)continue;
+                    cone[l][c] = 1;
+
+                } 
+        }
+        // habilidade da cruz
+        for (int c = 0; c < coluna; c++) 
+        {
+            if (l == 0 || l == 2) 
+            {
+                if (c < 2 || c > 2)continue;
+                cruz[l][c] = 1;
+            }
+                else if (l == 1) 
+                {
+                    cruz[l][c] = 1;
+                }
+        }
+
+        // habilidade do octaedro
+        for (int c = 0; c < coluna; c++) 
+        {
+            if (l == 0 || l == 2) 
+            {
+                if(c < 2 || c > 2)continue;
+                octaedro[l][c] = 1;
+            }
+                else 
+                {
+                    if(c < 1 || c > 3) continue;
+                    octaedro[l][c] = 1;                    
+                }
+        }
+
+    }
+        // adicionando as habilidades ao tabuleiro
+     for (int l = 0; l < linha; l++) 
+    {
+
+            for(int n = 0; n < coluna; n++) 
+            {
+                if (cone[l][n] == 1) 
+                {
+                    tabuleiro[l][n] = 1;
+                }
+
+                if (cruz[l][n] == 1) 
+                {
+                    tabuleiro[l+7][n] = 1;
+                }
+
+                if (octaedro[l][n] == 1) 
+                {
+                    tabuleiro[l+5][n+5] = 1;
+                }
+            }      
+    }  
+
 // Exibindo o tabuleiro
 
     printf("TABULEIRO DE BATALHA NAVAL: \n");
@@ -73,39 +166,22 @@ int main() {
     {
         printf(" %c", letras[contar]);
     }
+    printf("\n");
+
     for(int l = 0; l < 10; l++) 
     {
+    // Exibindo os números de 0 a 9
+        printf("%d  ", l);
 
-        printf("\n");
-
-        printf("%d ", l+1);
-
+    // Exibindo a tabela 
         for(int n = 0; n < 10; n++) 
         {
-            printf("%d ", tabuleiro[l][n]);
+         printf("%d ", tabuleiro[l][n]);
         }
+
+        printf("\n");    
     }
 
-    // Nível Mestre - Habilidades Especiais com Matrizes
-    // Sugestão: Crie matrizes para representar habilidades especiais como cone, cruz, e octaedro.
-    // Sugestão: Utilize estruturas de repetição aninhadas para preencher as áreas afetadas por essas habilidades no tabuleiro.
-    // Sugestão: Exiba o tabuleiro com as áreas afetadas, utilizando 0 para áreas não afetadas e 1 para áreas atingidas.
-
-    // Exemplos de exibição das habilidades:
-    // Exemplo para habilidade em cone:
-    // 0 0 1 0 0
-    // 0 1 1 1 0
-    // 1 1 1 1 1
-    
-    // Exemplo para habilidade em octaedro:
-    // 0 0 1 0 0
-    // 0 1 1 1 0
-    // 0 0 1 0 0
-
-    // Exemplo para habilidade em cruz:
-    // 0 0 1 0 0
-    // 1 1 1 1 1
-    // 0 0 1 0 0
 
     return 0;
 }
